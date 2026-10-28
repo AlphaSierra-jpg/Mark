@@ -21,6 +21,27 @@ xcodebuild -project Mark.xcodeproj -scheme Mark -configuration Release \
     -derivedDataPath build CODE_SIGN_IDENTITY="-" build
 ```
 
+## Release
+
+```sh
+./scripts/make-dmg.sh            # builds Release, writes dist/Mark-<version>.dmg
+./scripts/make-dmg.sh --no-build # repackage what is already built
+```
+
+The DMG holds `Mark.app` next to an `Applications` shortcut, and is ad hoc
+signed like the app. Bump `MARKETING_VERSION` in `project.yml` to version it.
+
+## Icon
+
+Drop a square source image (1024x1024) through:
+
+```sh
+./scripts/make-icon.sh path/to/logo.png
+```
+
+It writes every macOS size into `Mark/Assets.xcassets/AppIcon.appiconset`, so
+the next build picks it up.
+
 ## Install
 
 ```sh
@@ -40,6 +61,7 @@ To make Mark the default reader, select a `.md` file in the Finder, press ⌘I, 
 | `Shared/Resources/web/` | Embedded marked.js, highlight.js, github-markdown-css |
 | `Mark/` | The SwiftUI app (`DocumentGroup(viewing:)`) |
 | `MarkQuickLook/` | The Quick Look preview extension |
+| `scripts/` | `make-dmg.sh` (release artifact), `make-icon.sh` (app icon) |
 
 ## Notes
 

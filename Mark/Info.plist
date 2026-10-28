@@ -28,6 +28,10 @@
 	<string>Mark — a read-only Markdown reader.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
 

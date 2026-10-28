@@ -30,3 +30,6 @@ Package.resolved
 .LSOverride
 Icon?
 ._*
+
+# Release artifacts
+dist/
