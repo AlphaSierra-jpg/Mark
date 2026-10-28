@@ -33,10 +33,11 @@ signed like the app. Bump `MARKETING_VERSION` in `project.yml` to version it.
 
 ## Icon
 
-Drop a square source image (1024x1024) through:
+The source is `mark_icon.png` at the repo root. To regenerate after
+swapping it for a new version:
 
 ```sh
-./scripts/make-icon.sh path/to/logo.png
+./scripts/make-icon.sh mark_icon.png
 ```
 
 It writes every macOS size into `Mark/Assets.xcassets/AppIcon.appiconset`, so
