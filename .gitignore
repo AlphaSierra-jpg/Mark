@@ -1,0 +1,32 @@
+# The Xcode project is generated from project.yml by XcodeGen.
+# Run `xcodegen generate` after cloning.
+*.xcodeproj
+*.xcworkspace
+
+# Build output
+build/
+DerivedData/
+*.dSYM/
+*.ipa
+*.app
+
+# Xcode user state
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+*.hmap
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*

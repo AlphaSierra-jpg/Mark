@@ -1,0 +1,85 @@
+name: Mark
+
+options:
+  bundleIdPrefix: com.tonnom
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.0"
+    DEVELOPMENT_LANGUAGE: en
+    ALWAYS_SEARCH_USER_PATHS: NO
+    CLANG_ENABLE_OBJC_ARC: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    # Local, ad hoc signed build: no team, no provisioning profile, no notarisation.
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+    PROVISIONING_PROFILE_SPECIFIER: ""
+    # Hardened runtime would need explicit JIT entitlements for WebKit; it buys
+    # nothing for a locally signed personal build.
+    ENABLE_HARDENED_RUNTIME: NO
+
+targets:
+  Mark:
+    type: application
+    platform: macOS
+    sources:
+      - path: Mark
+        excludes:
+          - Info.plist
+          - Mark.entitlements
+      - path: Shared
+        excludes:
+          - Resources
+      # Folder reference: the web assets land in Contents/Resources/web/,
+      # so adding one never means regenerating the project.
+      - path: Shared/Resources/web
+        type: folder
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_NAME: Mark
+        PRODUCT_BUNDLE_IDENTIFIER: com.tonnom.Mark
+        INFOPLIST_FILE: Mark/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: Mark/Mark.entitlements
+        COMBINE_HIDPI_IMAGES: YES
+        ENABLE_PREVIEWS: YES
+        SWIFT_EMIT_LOC_STRINGS: NO
+    dependencies:
+      # Embeds the appex in Contents/PlugIns, which is where pluginkit
+      # discovers it once the app lands in /Applications.
+      - target: MarkQuickLook
+        embed: true
+        codeSign: true
+
+  MarkQuickLook:
+    type: app-extension
+    platform: macOS
+    sources:
+      - path: MarkQuickLook
+        excludes:
+          - Info.plist
+          - MarkQuickLook.entitlements
+      # The same renderer the app uses, compiled into the extension.
+      - path: Shared
+        excludes:
+          - Resources
+      - path: Shared/Resources/web
+        type: folder
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_NAME: MarkQuickLook
+        PRODUCT_BUNDLE_IDENTIFIER: com.tonnom.Mark.QuickLook
+        INFOPLIST_FILE: MarkQuickLook/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: MarkQuickLook/MarkQuickLook.entitlements
+        SKIP_INSTALL: YES
