@@ -31,6 +31,14 @@ xcodebuild -project Mark.xcodeproj -scheme Mark -configuration Release \
 The DMG holds `Mark.app` next to an `Applications` shortcut, and is ad hoc
 signed like the app. Bump `MARKETING_VERSION` in `project.yml` to version it.
 
+If `dmg_background.png` exists at the repo root, it's used as the window
+background and the two icons are placed into its wells; without it, the
+script falls back to a plain default Finder window. Finder shows a folder's
+background picture at native pixel size — it does not halve it for Retina on
+its own — so the script derives both `background.png` (1x) and
+`background@2x.png` (2x) from the source and lets Finder's normal HiDPI
+asset-pair resolution pick the right one.
+
 ## Icon
 
 The source is `mark_icon.png` at the repo root. To regenerate after
