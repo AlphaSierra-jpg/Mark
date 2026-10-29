@@ -33,6 +33,13 @@ APP_X_FRACTION=0.285
 APPLICATIONS_X_FRACTION=0.715
 WELL_Y_FRACTION=0.5
 
+# Finder's "position of item" places the centre of the icon+label block, not
+# the icon glyph alone — the label pulls it down, and label text width pulls
+# it sideways. Measured empirically (screenshot the result, compare icon
+# centre to well centre) at icon size 128; re-measure if ICON_SIZE changes.
+POSITION_X_CORRECTION=-8
+POSITION_Y_CORRECTION=-17
+
 SKIP_BUILD=0
 [[ "${1:-}" == "--no-build" ]] && SKIP_BUILD=1
 
@@ -105,9 +112,9 @@ hdiutil attach "$RW_DMG" -quiet -mountpoint "$MOUNT_POINT"
 
 if [[ -f "$BACKGROUND_SOURCE" ]]; then
     echo "==> Arranging icons"
-    APP_X=$(python3 -c "print(round(${APP_X_FRACTION} * ${WINDOW_WIDTH}))")
-    APPLICATIONS_X=$(python3 -c "print(round(${APPLICATIONS_X_FRACTION} * ${WINDOW_WIDTH}))")
-    WELL_Y=$(python3 -c "print(round(${WELL_Y_FRACTION} * ${WINDOW_HEIGHT}))")
+    APP_X=$(python3 -c "print(round(${APP_X_FRACTION} * ${WINDOW_WIDTH}) + ${POSITION_X_CORRECTION})")
+    APPLICATIONS_X=$(python3 -c "print(round(${APPLICATIONS_X_FRACTION} * ${WINDOW_WIDTH}) + ${POSITION_X_CORRECTION})")
+    WELL_Y=$(python3 -c "print(round(${WELL_Y_FRACTION} * ${WINDOW_HEIGHT}) + ${POSITION_Y_CORRECTION})")
     WINDOW_RIGHT=$((100 + WINDOW_WIDTH))
     # TITLE_BAR_HEIGHT accounts for the title bar, which "window bounds"
     # includes but the icon view content area (and so the background image)
